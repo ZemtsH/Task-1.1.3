@@ -1,5 +1,6 @@
 package jm.task.core.jdbc.dao;
 
+import jdk.jshell.execution.Util;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 
@@ -10,13 +11,13 @@ import java.sql.Statement;
 import java.util.*;
 
 public class UserDaoJDBCImpl implements UserDao {
-    public UserDaoJDBCImpl() {
+    Util util = new Util();
 
+    public UserDaoJDBCImpl() {
     }
 
     public void createUsersTable() {
         try {
-            Util util = new Util();
             Statement statement = util.getConnection().createStatement();
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS users (id BIGINT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(30), lastName VARCHAR(30), age INT(2))");
         } catch (SQLException throwables) {
@@ -25,9 +26,8 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void dropUsersTable() {
-        Util util = null;
+        util = null;
         try {
-            util = new Util();
             Statement statement = util.getConnection().createStatement();
             statement.executeUpdate("DROP TABLE users");
         } catch (SQLException throwables) {
@@ -35,13 +35,11 @@ public class UserDaoJDBCImpl implements UserDao {
         }
     }
 
-    private static final String INSERT = "INSERT INTO users VALUES (id,?,?,?)";
-
     public void saveUser(String name, String lastName, byte age) {
-        Util util = null;
+        private static final String INSERT = "INSERT INTO users VALUES (id,?,?,?)";
+        util = null;
         PreparedStatement preparedStatement = null;
         try {
-            util = new Util();
             Statement statement = util.getConnection().createStatement();
             preparedStatement = statement.getConnection().prepareStatement(INSERT);
             preparedStatement.setString(1, name);
@@ -53,13 +51,11 @@ public class UserDaoJDBCImpl implements UserDao {
         }
     }
 
-    private static final String DELETE = "DELETE FROM users WHERE (id = ?)";
-
     public void removeUserById(long id) {
-        Util util = null;
+        private static final String DELETE = "DELETE FROM users WHERE (id = ?)";
+        util = null;
         PreparedStatement preparedStatement = null;
         try {
-            util = new Util();
             Statement statement = util.getConnection().createStatement();
             preparedStatement = statement.getConnection().prepareStatement(DELETE);
             preparedStatement.setLong(1, id);
@@ -69,15 +65,13 @@ public class UserDaoJDBCImpl implements UserDao {
         }
     }
 
-    private static final String GET_ALL = "SELECT * FROM users";
-
     public List<User> getAllUsers() {
-        Util util = null;
+        private static final String GET_ALL = "SELECT * FROM users";
+        util = null;
         PreparedStatement preparedStatement = null;
         List<User> list = new LinkedList<User>();
         User user = new User();
         try {
-            util = new Util();
             Statement statement = util.getConnection().createStatement();
             preparedStatement = statement.getConnection().prepareStatement(GET_ALL);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -96,9 +90,8 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void cleanUsersTable() {
-        Util util = null;
+        util = null;
         try {
-            util = new Util();
             Statement statement = util.getConnection().createStatement();
             statement.executeUpdate("DELETE FROM users");
         } catch (SQLException throwables) {
