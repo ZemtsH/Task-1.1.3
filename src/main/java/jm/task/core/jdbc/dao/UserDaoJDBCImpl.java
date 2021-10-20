@@ -22,6 +22,8 @@ public class UserDaoJDBCImpl implements UserDao {
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS users (id BIGINT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(30), lastName VARCHAR(30), age INT(2))");
         } catch (SQLException throwables) {
             System.out.println("Ошибка в создании таблицы");
+        } finally {
+            try { if (statement != null) statement.close(); } catch (Exception e) {};
         }
     }
 
@@ -32,6 +34,8 @@ public class UserDaoJDBCImpl implements UserDao {
             statement.executeUpdate("DROP TABLE users");
         } catch (SQLException throwables) {
             System.out.println("Таблицы не существует!");
+        } finally {
+            try { if (statement != null) statement.close(); } catch (Exception e) {};
         }
     }
 
@@ -48,6 +52,8 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        } finally {
+            try { if (statement != null) statement.close(); } catch (Exception e) {};
         }
     }
 
@@ -62,6 +68,8 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        } finally {
+            try { if (statement != null) statement.close(); } catch (Exception e) {};
         }
     }
 
@@ -84,6 +92,8 @@ public class UserDaoJDBCImpl implements UserDao {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        } finally {
+            try { if (statement != null) statement.close(); } catch (Exception e) {};
         }
 
         return list; // Тут придумать как вернуть лист
@@ -96,6 +106,8 @@ public class UserDaoJDBCImpl implements UserDao {
             statement.executeUpdate("DELETE FROM users");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        } finally {
+            try { if (statement != null) statement.close(); } catch (Exception e) {};
         }
     }
 }
